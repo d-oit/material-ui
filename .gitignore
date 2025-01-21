@@ -44,3 +44,6 @@ docs/public/static/blog/feed/*
 .nx/workspace-data
 screenshots
 packed
+
+# Ignore environment variables
+.env
