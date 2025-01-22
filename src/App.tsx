@@ -2,28 +2,21 @@ import React from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useTheme } from './contexts/ThemeContext';
-import { getTheme } from './styles/theme';
-import { useOfflineSync } from './hooks/useOfflineSync';
+import theme from './styles/theme';
+import useOfflineSync from './hooks/useOfflineSync';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import SignIn from './components/SignIn';
 
 const AppWrapper = () => {
-  const { resolvedTheme } = useTheme();
-  const theme = getTheme(resolvedTheme);
+  useTheme();
 
   // Initialize offline sync capabilities
-  useOfflineSync({
-    onSuccess: () => {
-      console.log('Successfully synced data');
-    },
-    onError: (error) => {
-      console.error('Error syncing data:', error);
-    },
-  });
+  useOfflineSync();
 
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
-      {/* Rest of your app components */}
+      <SignIn />
       <OfflineIndicator />
     </MuiThemeProvider>
   );
