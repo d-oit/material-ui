@@ -1,0 +1,63 @@
+{
+  "name": "security_logs",
+  "type": "base",
+  "schema": [
+    {
+      "name": "action",
+      "type": "text",
+      "required": true,
+      "options": {
+        "min": null,
+        "max": null,
+        "pattern": ""
+      }
+    },
+    {
+      "name": "user_id",
+      "type": "relation",
+      "required": false,
+      "options": {
+        "collectionId": "_pb_users_auth_",
+        "cascadeDelete": false,
+        "minSelect": null,
+        "maxSelect": 1,
+        "displayFields": null
+      }
+    },
+    {
+      "name": "ip_address",
+      "type": "text",
+      "required": true,
+      "options": {
+        "min": null,
+        "max": null,
+        "pattern": ""
+      }
+    },
+    {
+      "name": "timestamp",
+      "type": "date",
+      "required": true,
+      "options": {
+        "min": null,
+        "max": null
+      }
+    },
+    {
+      "name": "details",
+      "type": "text",
+      "required": false,
+      "options": {
+        "min": null,
+        "max": null,
+        "pattern": ""
+      }
+    }
+  ],
+  "listRule": "@request.auth.id != \"\" && user_id = @request.auth.id",
+  "viewRule": "@request.auth.id != \"\" && user_id = @request.auth.id",
+  "createRule": "@request.auth.id != \"\"",
+  "updateRule": "@request.auth.id != \"\" && user_id = @request.auth.id",
+  "deleteRule": "@request.auth.id != \"\" && user_id = @request.auth.id",
+  "options": {}
+}

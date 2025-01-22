@@ -1,7 +1,23 @@
-// danger uses babelify under the hood. The implementation is buggy and fails on our
-// custom plugins in our codebase. We'll just disable it and do our own compilation.
-// Danger must always be run with envirnonent variable `DANGER_DISABLE_TRANSPILATION="true"`.
-require('@babel/register')({
-  extensions: ['.js', '.ts', '.tsx'],
+import { danger, warn, message, fail } from 'danger';
+
+danger.schedule(async () => {
+  const pr = danger.github.pr;
+  const modifiedFiles = danger.git.modified_files;
+  const createdFiles = danger.git.created_files;
+  const deletedFiles = danger.git.deleted_files;
+
+  // Example: Check for changes in specific files
+  if (modifiedFiles.includes('src/services/pocketbase.ts')) {
+    message('Changes detected in PocketBase service file.');
+  }
+
+  // Example: Warn if there are too many changes
+  if (modifiedFiles.length > 10) {
+    warn('Too many files modified in this PR.');
+  }
+
+  // Example: Fail if a specific file is deleted
+  if (deletedFiles.includes('src/services/pocketbase.ts')) {
+    fail('PocketBase service file should not be deleted.');
+  }
 });
-require('./dangerFileContent');

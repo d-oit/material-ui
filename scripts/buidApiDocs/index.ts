@@ -1,47 +1,12 @@
-import yargs, { ArgumentsCamelCase } from 'yargs';
-import { ProjectSettings, buildApi } from '@mui-internal/api-docs-builder';
-import {
-  baseUiProjectSettings,
-  joyUiProjectSettings,
-  materialUiProjectSettings,
-  muiSystemProjectSettings,
-} from '@mui-internal/api-docs-builder-core';
+import path from 'path';
+import fs from 'fs';
+import { execSync } from 'child_process';
 
-const projectSettings: ProjectSettings[] = [
-  materialUiProjectSettings,
-  baseUiProjectSettings,
-  joyUiProjectSettings,
-  muiSystemProjectSettings,
-];
+const projectRoot = path.resolve(__dirname, '../../../');
+const apiDocsDir = path.join(projectRoot, 'api-docs');
 
-type CommandOptions = { grep?: string; rawDescriptions?: boolean };
-
-async function run(argv: ArgumentsCamelCase<CommandOptions>) {
-  const grep = argv.grep == null ? null : new RegExp(argv.grep);
-  const rawDescriptions = argv.rawDescriptions === true;
-  return buildApi(projectSettings, grep, rawDescriptions);
+if (!fs.existsSync(apiDocsDir)) {
+  fs.mkdirSync(apiDocsDir);
 }
 
-yargs(process.argv.slice(2))
-  .command({
-    command: '$0',
-    describe: 'Generates API documentation for the MUI packages.',
-    builder: (command) => {
-      return command
-        .option('grep', {
-          description:
-            'Only generate files for component filenames matching the pattern. The string is treated as a RegExp.',
-          type: 'string',
-        })
-        .option('rawDescriptions', {
-          description: 'Whether to output raw JSDoc descriptions or process them as markdown.',
-          type: 'boolean',
-          default: false,
-        });
-    },
-    handler: run,
-  })
-  .help()
-  .strict(true)
-  .version(false)
-  .parse();
+execSync('tsc --project tsconfig.json --outDir api-docs', { cwd: projectRoot });

@@ -1,0 +1,32 @@
+{
+  "name": "users",
+  "type": "auth",
+  "schema": [
+    {
+      "name": "email",
+      "type": "email",
+      "required": true,
+      "options": {
+        "min": null,
+        "max": null,
+        "pattern": ""
+      }
+    },
+    {
+      "name": "password",
+      "type": "text",
+      "required": true,
+      "options": {
+        "min": null,
+        "max": null,
+        "pattern": ""
+      }
+    }
+  ],
+  "listRule": null,
+  "viewRule": null,
+  "createRule": null,
+  "updateRule": null,
+  "deleteRule": null,
+  "options": {}
+}

@@ -1,3 +1,6 @@
-const loadComparison = require('./loadComparison');
+import { sizeSnapshotIndex } from "./sizeSnapshotIndex";
 
-module.exports = { loadComparison };
+sizeSnapshotIndex().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
