@@ -1,27 +1,46 @@
-import { lazy, Suspense } from 'react';
-import { CircularProgress } from '@mui/material';
-import { Routes, Route } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Dashboard from './components/Dashboard';
+import LinkDetails from './components/LinkDetails';
+import CategoriesManagement from './components/CategoriesManagement';
+import SettingsPage from './components/SettingsPage';
+import SignIn from './components/SignIn';
+import EmptyStates from './components/EmptyStates';
+import NotFound from './components/NotFound';
 
-const Home = lazy(() => import('./pages/Home'));
-const Settings = lazy(() => import('./pages/Settings'));
-const Links = lazy(() => import('./pages/Links'));
-const Search = lazy(() => import('./pages/Search'));
-const Offline = lazy(() => import('./pages/Offline'));
-const Auth = lazy(() => import('./pages/Auth'));
-const Theme = lazy(() => import('./pages/Theme'));
-
-const AppRoutes = () => (
-  <Suspense fallback={<CircularProgress />}>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/settings" element={<Settings />} />
-      <Route path="/links" element={<Links />} />
-      <Route path="/search" element={<Search />} />
-      <Route path="/offline" element={<Offline />} />
-      <Route path="/auth" element={<Auth />} />
-      <Route path="/theme" element={<Theme />} />
-    </Routes>
-  </Suspense>
-);
+const AppRoutes: React.FC = () => {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/signin" element={<SignIn />} />
+          <Route
+            path="/dashboard"
+            element={<ProtectedRoute component={Dashboard} />}
+          />
+          <Route
+            path="/link-details"
+            element={<ProtectedRoute component={LinkDetails} />}
+          />
+          <Route
+            path="/categories"
+            element={<ProtectedRoute component={CategoriesManagement} />}
+          />
+          <Route
+            path="/settings"
+            element={<ProtectedRoute component={SettingsPage} />}
+          />
+          <Route
+            path="/empty-states"
+            element={<ProtectedRoute component={EmptyStates} />}
+          />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+};
 
 export default AppRoutes;

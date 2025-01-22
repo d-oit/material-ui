@@ -1,37 +1,42 @@
-import { useState } from 'react';
-import { Button, Container, Typography } from '@mui/material';
-import { GitHub } from '@mui/icons-material';
-import pb from '../services/pocketbase';
+import React from 'react';
+import { Box, Card, CardContent, Typography, Button, CircularProgress } from '@mui/material';
+import { ResponsiveContainer } from './ResponsiveContainer';
 
 const SignIn = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleGitHubLogin = async () => {
-    setIsLoading(true);
-    try {
-      await pb.collection('users').authWithOAuth2({ provider: 'github' });
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Login failed:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const isLoading = false; // Set to true to show loading state
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 8, textAlign: 'center' }}>
-      <Typography variant="h4" gutterBottom>
-        Welcome to do Links Collector
-      </Typography>
-      <Button
-        variant="contained"
-        startIcon={<GitHub />}
-        onClick={handleGitHubLogin}
-        disabled={isLoading}
+    <ResponsiveContainer>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          background: 'linear-gradient(45deg, #1976D2 30%, #DC004E 90%)',
+        }}
       >
-        Sign in with GitHub
-      </Button>
-    </Container>
+        <Card sx={{ minWidth: 300 }}>
+          <CardContent>
+            <Typography variant="h5" component="div" gutterBottom>
+              Sign In
+            </Typography>
+            {isLoading ? (
+              <CircularProgress />
+            ) : (
+              <>
+                <Button variant="contained" color="primary" fullWidth sx={{ mb: 1 }}>
+                  Sign in with GitHub
+                </Button>
+                <Button variant="contained" color="secondary" fullWidth>
+                  Sign in with Discord
+                </Button>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </Box>
+    </ResponsiveContainer>
   );
 };
 
