@@ -23,6 +23,8 @@ Implemented comprehensive error handling and logging system across the applicati
    - `src/services/queryClient.ts` - API error handling
    - `cline_docs/systemPatterns.md` - Error handling documentation
    - `cline_docs/progress.md` - Progress tracking
+   - `src/App.tsx` - Included SnackbarComponent for error notifications
+   - `src/components/SignIn.tsx` - Integrated error handling for sign-in process
 
 2. Key Decisions:
    - Using Snackbar without Alert for simplicity

@@ -6,9 +6,11 @@ import { lightTheme, darkTheme } from './styles/theme';
 import useOfflineSync from './hooks/useOfflineSync';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import SignIn from './components/SignIn';
+import { useErrorToast } from './hooks/useErrorToast';
 
 const AppWrapper = () => {
   const { theme } = useTheme();
+  const { SnackbarComponent } = useErrorToast();
 
   // Initialize offline sync capabilities
   useOfflineSync();
@@ -18,6 +20,7 @@ const AppWrapper = () => {
       <CssBaseline />
       <SignIn />
       <OfflineIndicator />
+      <SnackbarComponent />
     </MuiThemeProvider>
   );
 };
