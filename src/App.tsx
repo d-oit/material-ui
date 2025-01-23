@@ -2,19 +2,19 @@ import React from 'react';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useTheme } from './contexts/ThemeContext';
-import theme from './styles/theme';
+import { lightTheme, darkTheme } from './styles/theme';
 import useOfflineSync from './hooks/useOfflineSync';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import SignIn from './components/SignIn';
 
 const AppWrapper = () => {
-  useTheme();
+  const { theme } = useTheme();
 
   // Initialize offline sync capabilities
   useOfflineSync();
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <CssBaseline />
       <SignIn />
       <OfflineIndicator />

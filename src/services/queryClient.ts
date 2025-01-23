@@ -23,14 +23,14 @@ export const createQueryClient = (showError: (message: string) => void): QueryCl
       queries: {
         retry: 1,
         staleTime: 5 * 60 * 1000, // 5 minutes
-        onError: (error) => {
+        onError: (error: unknown) => {
           const message = getErrorMessage(error);
           console.error('Query error:', message);
           showError(message);
         },
       },
       mutations: {
-        onError: (error) => {
+        onError: (error: unknown) => {
           const message = getErrorMessage(error);
           console.error('Mutation error:', message);
           showError(message);

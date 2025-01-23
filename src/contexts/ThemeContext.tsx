@@ -3,6 +3,7 @@ import pb from '../services/pocketbase';
 
 interface ThemeContextProps {
   theme: string;
+  isDarkMode: boolean;
   setTheme: (theme: string) => void;
 }
 
@@ -30,8 +31,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }
   };
 
+  const isDarkMode = theme === 'dark';
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: updateTheme }}>
+    <ThemeContext.Provider value={{ theme, isDarkMode, setTheme: updateTheme }}>
       {children}
     </ThemeContext.Provider>
   );
