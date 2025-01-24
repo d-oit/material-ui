@@ -6,6 +6,7 @@ import { ResponsiveContainer } from './ResponsiveContainer';
 import useLinks from '../hooks/useLinks';
 import { LinearProgress } from '@mui/material';
 import LinkForm from './LinkForm';
+import { useQueryClient } from '@tanstack/react-query';
 
 // Base interface for PocketBase records
 interface BaseRecord {
@@ -18,6 +19,7 @@ interface BaseRecord {
 
 interface Link extends BaseRecord {
   title: string;
+  url: string;
   category: string;
 }
 
@@ -32,6 +34,8 @@ const Dashboard = () => {
     page: 0,
     pageSize: 5,
   });
+  const [isFormOpen, setIsFormOpen] = React.useState(false);
+  const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useLinks({
     page: paginationModel.page + 1, // PocketBase uses 1-based pagination
@@ -63,6 +67,19 @@ const Dashboard = () => {
   const rows = React.useMemo(() => {
     return (data?.items || []) as Link[];
   }, [data?.items]);
+
+  const handleAddClick = () => {
+    setIsFormOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsFormOpen(false);
+  };
+
+  const handleSuccess = () => {
+    handleClose();
+    queryClient.invalidateQueries({ queryKey: ['links'] });
+  };
 
   return (
     <ResponsiveContainer>
@@ -104,7 +121,26 @@ const Dashboard = () => {
           />
         )}
       </Box>
-      <Fab color="primary" aria-label="add" sx={{ position: 'fixed', bottom: 16, right: 16 }}>
+      <Dialog
+        open={isFormOpen}
+        onClose={handleClose}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: { p: 2 }
+        }}
+      >
+        <Typography variant="h6" component="h2" sx={{ mb: 2 }}>
+          Add New Link
+        </Typography>
+        <LinkForm onSuccess={handleSuccess} />
+      </Dialog>
+      <Fab 
+        color="primary" 
+        aria-label="add" 
+        sx={{ position: 'fixed', bottom: 16, right: 16 }}
+        onClick={handleAddClick}
+      >
         <Add />
       </Fab>
     </ResponsiveContainer>
