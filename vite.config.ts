@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 export default defineConfig({
   plugins: [
@@ -70,6 +69,5 @@ export default defineConfig({
         type: 'module',
       },
     }),
-    visualizer({ open: true }),
   ],
 });
