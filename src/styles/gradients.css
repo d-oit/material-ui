@@ -1,9 +1,10 @@
-/* Gradients and Effects */
-body {
+/* Gradient Background */
+.gradient-background {
   background: linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%);
 }
 
-button {
+/* Gradient Buttons */
+.gradient-button {
   background: linear-gradient(45deg, #2196F3 30%, #21CBF3 90%);
   color: white;
   border: none;
@@ -13,26 +14,28 @@ button {
   transition: transform 0.3s ease-in-out;
 }
 
-button:hover {
+.gradient-button:hover {
   transform: scale(1.05);
 }
 
-button:active {
+.gradient-button:active {
   transform: scale(0.95);
 }
 
-.card {
+/* Gradient Cards */
+.gradient-card {
   background: linear-gradient(45deg, #FFEB3B 30%, #FFC107 90%);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card:hover {
+.gradient-card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-input {
+/* Gradient Inputs */
+.gradient-input {
   background: linear-gradient(45deg, #E0E0E0 30%, #BDBDBD 90%);
   border: none;
   padding: 10px;
@@ -40,6 +43,6 @@ input {
   transition: box-shadow 0.3s ease-in-out;
 }
 
-input:focus {
+.gradient-input:focus {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }

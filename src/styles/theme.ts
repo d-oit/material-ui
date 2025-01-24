@@ -3,8 +3,8 @@ import { createTheme } from '@mui/material/styles';
 export const lightTheme = createTheme({
   palette: {
     mode: 'light',
-    primary: { main: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)' },
-    secondary: { main: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)' },
+    primary: { main: '#1976D2' },
+    secondary: { main: '#DC004E' },
     background: { default: '#FFFFFF', paper: '#F5F5F5' },
     text: {
       primary: 'rgba(0, 0, 0, 0.87)',
@@ -74,8 +74,8 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: { main: 'linear-gradient(45deg, #90CAF9 30%, #90CAF9 90%)' },
-    secondary: { main: 'linear-gradient(45deg, #F48FB1 30%, #F48FB1 90%)' },
+    primary: { main: '#90CAF9' },
+    secondary: { main: '#F48FB1' },
     background: { default: '#121212', paper: '#1E1E1E' },
     text: {
       primary: 'rgba(255, 255, 255, 0.87)',
