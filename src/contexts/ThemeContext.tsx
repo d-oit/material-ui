@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider as MuiThemeProvider } from '@mui/material';
 import pb from '../services/pocketbase';
+import { lightTheme, darkTheme } from '../styles/theme';
 
 interface ThemeContextProps {
   theme: string;
@@ -12,18 +13,6 @@ export const ThemeContext = createContext<ThemeContextProps>({
   theme: 'light',
   isDarkMode: false,
   setTheme: () => {},
-});
-
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
 });
 
 interface ThemeProviderProps {

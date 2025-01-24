@@ -6,6 +6,7 @@ import QueryClientProviderWrapper from './contexts/QueryClientProvider';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
 import registerSW from './registerSW';
+import { GlobalStylesComponent } from './styles/global';
 
 // Register service worker
 registerSW();
@@ -15,6 +16,7 @@ if (container) {
   const root = ReactDOM.createRoot(container);
   root.render(
     <React.StrictMode>
+      <GlobalStylesComponent />
       <ThemeProvider>
         <AuthProvider>
           <QueryClientProviderWrapper>
