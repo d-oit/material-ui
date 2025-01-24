@@ -2,10 +2,14 @@ import React, { useState } from 'react';
 import { Box, Card, CardContent, Typography, Button, CircularProgress } from '@mui/material';
 import { ResponsiveContainer } from './ResponsiveContainer';
 import { useErrorToast } from '../hooks/useErrorToast';
+import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { showError } = useErrorToast();
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignIn = async (provider: 'github' | 'discord') => {
     setIsLoading(true);
@@ -13,7 +17,13 @@ const SignIn = () => {
       // Simulate sign-in process
       await new Promise((resolve) => setTimeout(resolve, 2000));
       // Replace with actual sign-in logic
-      console.log(`Signed in with ${provider}`);
+      const userData = {
+        id: '123',
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+      };
+      login(userData);
+      navigate('/dashboard');
     } catch (error) {
       showError(`Failed to sign in with ${provider}`);
     } finally {

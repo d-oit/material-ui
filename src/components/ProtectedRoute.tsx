@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Redirect, RouteProps } from 'react-router-dom';
+import { Route, Navigate, RouteProps } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
 interface ProtectedRouteProps extends RouteProps {
@@ -12,13 +12,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, .
   return (
     <Route
       {...rest}
-      render={(props) =>
-        user ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/signin" />
-        )
-      }
+      element={user ? <Component /> : <Navigate to="/signin" />}
     />
   );
 };
