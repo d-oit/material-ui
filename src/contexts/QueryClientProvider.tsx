@@ -8,12 +8,13 @@ interface QueryClientProviderWrapperProps {
 }
 
 const QueryClientProviderWrapper: React.FC<QueryClientProviderWrapperProps> = ({ children }) => {
-  const { showError } = useErrorToast();
-  const queryClient = createQueryClient();
+  const { showError, SnackbarComponent } = useErrorToast();
+  const queryClient = createQueryClient(showError);
 
   return (
     <QueryClientProvider client={queryClient}>
       {children}
+      <SnackbarComponent />
     </QueryClientProvider>
   );
 };

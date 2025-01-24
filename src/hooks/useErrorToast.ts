@@ -1,41 +1,37 @@
-import { Snackbar } from '@mui/material';
-import React, { useState, type FC } from 'react';
+import React from 'react';
+import type { ComponentType } from 'react';
+import { ErrorToast } from '../components/ErrorToast';
 
 interface ErrorToastReturn {
   showError: (message: string) => void;
-  SnackbarComponent: FC;
+  SnackbarComponent: ComponentType<{}>;
 }
 
 export const useErrorToast = (): ErrorToastReturn => {
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
 
-  const handleClose = () => {
+  const handleClose = React.useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
-  const showError = (msg: string): void => {
+  const showError = React.useCallback((msg: string): void => {
     setMessage(msg || 'An unexpected error occurred.');
     setOpen(true);
-  };
+  }, []);
 
-  const ToastComponent: FC = () => (
-    React.createElement(Snackbar, {
+  const SnackbarComponent: ComponentType = () => {
+    return React.createElement(ErrorToast, {
       open,
       message,
-      onClose: handleClose,
-      autoHideDuration: 6000,
-      anchorOrigin: {
-        vertical: 'bottom',
-        horizontal: 'right'
-      }
-    })
-  );
+      onClose: handleClose
+    });
+  };
 
-  ToastComponent.displayName = 'ErrorSnackbar';
+  SnackbarComponent.displayName = 'ErrorSnackbar';
 
   return {
     showError,
-    SnackbarComponent: ToastComponent
+    SnackbarComponent
   };
 };

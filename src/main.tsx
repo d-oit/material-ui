@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import App from './App';
+import AppWrapper from './App';
 import QueryClientProviderWrapper from './contexts/QueryClientProvider';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { AuthProvider } from './contexts/AuthContext';
 
 const container = document.getElementById("root");
 if (container) {
@@ -11,10 +12,12 @@ if (container) {
   root.render(
     <React.StrictMode>
       <ThemeProvider>
-        <QueryClientProviderWrapper>
-          <App />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProviderWrapper>
+        <AuthProvider>
+          <QueryClientProviderWrapper>
+            <AppWrapper />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProviderWrapper>
+        </AuthProvider>
       </ThemeProvider>
     </React.StrictMode>
   );

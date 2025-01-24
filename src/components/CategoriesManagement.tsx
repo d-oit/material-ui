@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Typography, Masonry, Card, CardContent, TextField, Button } from '@mui/material';
+import { Box, Typography, Card, CardContent, TextField, Button } from '@mui/material';
+import { Masonry } from '@mui/lab';
 import { ResponsiveContainer } from './ResponsiveContainer';
 
 const CategoriesManagement = () => {

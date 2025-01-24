@@ -5,7 +5,7 @@ import { useTheme } from './contexts/ThemeContext';
 import { lightTheme, darkTheme } from './styles/theme';
 import useOfflineSync from './hooks/useOfflineSync';
 import { OfflineIndicator } from './components/OfflineIndicator';
-import SignIn from './components/SignIn';
+import AppRoutes from './routes';
 import { useErrorToast } from './hooks/useErrorToast';
 
 const AppWrapper = () => {
@@ -18,7 +18,7 @@ const AppWrapper = () => {
   return (
     <MuiThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
       <CssBaseline />
-      <SignIn />
+      <AppRoutes />
       <OfflineIndicator />
       <SnackbarComponent />
     </MuiThemeProvider>
