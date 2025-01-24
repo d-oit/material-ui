@@ -1,7 +1,8 @@
-module.exports = {
+/** @type {import('jest').Config} */
+export default {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/test/setupTests.ts'],
   collectCoverage: true,
   coverageThreshold: {
     global: {
@@ -11,4 +12,14 @@ module.exports = {
       lines: 80,
     },
   },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  transform: {
+    '^.+\\.tsx?$': 'ts-jest'
+  },
+  testMatch: [
+    '<rootDir>/test/**/*.test.{ts,tsx}'
+  ],
+  moduleDirectories: ['node_modules', 'src']
 };

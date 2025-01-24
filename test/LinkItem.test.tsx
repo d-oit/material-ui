@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import LinkItem from './LinkItem';
+import { act } from 'react-dom/test-utils';
+import LinkItem from '../src/components/LinkItem';
 
 describe('LinkItem', () => {
   it('renders link title and URL', () => {
@@ -11,8 +12,16 @@ describe('LinkItem', () => {
 
   it('calls delete handler when button is clicked', async () => {
     const mockDelete = jest.fn();
+    const user = userEvent.setup();
+    
     render(<LinkItem onDelete={mockDelete} />);
-    await userEvent.click(screen.getByRole('button', { name: 'Delete' }));
+    
+    const button = screen.getByRole('button', { name: 'Delete' });
+    
+    await act(async () => {
+      await user.click(button);
+    });
+
     expect(mockDelete).toHaveBeenCalled();
   });
 });
