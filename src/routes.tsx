@@ -16,26 +16,16 @@ const AppRoutes: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/signin" element={<SignIn />} />
-          <Route
-            path="/dashboard"
-            element={<ProtectedRoute component={Dashboard} />}
-          />
-          <Route
-            path="/link-details"
-            element={<ProtectedRoute component={LinkDetails} />}
-          />
-          <Route
-            path="/categories"
-            element={<ProtectedRoute component={CategoriesManagement} />}
-          />
-          <Route
-            path="/settings"
-            element={<ProtectedRoute component={SettingsPage} />}
-          />
-          <Route
-            path="/empty-states"
-            element={<ProtectedRoute component={EmptyStates} />}
-          />
+          
+          {/* Protected Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/link-details" element={<LinkDetails />} />
+            <Route path="/categories" element={<CategoriesManagement />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/empty-states" element={<EmptyStates />} />
+          </Route>
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

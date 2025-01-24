@@ -5,6 +5,10 @@ import AppWrapper from './App';
 import QueryClientProviderWrapper from './contexts/QueryClientProvider';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+import registerSW from './registerSW';
+
+// Register service worker
+registerSW();
 
 const container = document.getElementById("root");
 if (container) {

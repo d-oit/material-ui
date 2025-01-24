@@ -1,20 +1,15 @@
 import React from 'react';
-import { Route, Navigate, RouteProps } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 
-interface ProtectedRouteProps extends RouteProps {
-  component: React.ComponentType<any>;
-}
-
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, ...rest }) => {
+const ProtectedRoute: React.FC = () => {
   const { user } = useAuth();
 
-  return (
-    <Route
-      {...rest}
-      element={user ? <Component /> : <Navigate to="/signin" />}
-    />
-  );
+  if (!user) {
+    return <Navigate to="/signin" replace />;
+  }
+
+  return <Outlet />;
 };
 
 export default ProtectedRoute;
