@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import AppWrapper from './App';
 import QueryClientProviderWrapper from './contexts/QueryClientProvider';
@@ -17,14 +18,16 @@ if (container) {
   root.render(
     <React.StrictMode>
       <GlobalStylesComponent />
-      <ThemeProvider>
-        <AuthProvider>
+      <BrowserRouter>
+        <ThemeProvider>
           <QueryClientProviderWrapper>
-            <AppWrapper />
-            <ReactQueryDevtools initialIsOpen={false} />
+            <AuthProvider>
+              <AppWrapper />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </AuthProvider>
           </QueryClientProviderWrapper>
-        </AuthProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </BrowserRouter>
     </React.StrictMode>
   );
 }
