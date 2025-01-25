@@ -22,7 +22,11 @@ class PocketBaseClient {
 
   private setupInterceptors() {
     this.client.beforeSend = (url, options) => {
-      // Add custom headers or modify request if needed
+      const token = this.client.authStore.token;
+      if (token) {
+        options.headers = options.headers || {};
+        options.headers['Authorization'] = `Bearer ${token}`;
+      }
       return { url, options };
     };
   }
@@ -34,13 +38,11 @@ class PocketBaseClient {
         const delay = this.retryDelay * Math.pow(2, this.retryCount);
         await new Promise(resolve => setTimeout(resolve, delay));
         
-        // Retry the original request
         try {
           const originalUrl = error.originalError?.url || error.url;
           if (originalUrl) {
-            // Make a new request using the client
             return await this.client.send(originalUrl, {
-              method: 'GET', // Default to GET if method unknown
+              method: 'GET',
             });
           }
         } catch (retryError) {
@@ -48,10 +50,8 @@ class PocketBaseClient {
         }
       }
       
-      // Reset retry count after successful request or max retries
       this.retryCount = 0;
       
-      // Handle specific error cases
       switch (error.status) {
         case 401:
           throw new Error('Unauthorized access');
@@ -79,6 +79,5 @@ class PocketBaseClient {
   }
 }
 
-// Export singleton instance
 const pb = PocketBaseClient.getInstance().pb;
 export default pb;

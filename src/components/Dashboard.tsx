@@ -117,6 +117,12 @@ const Dashboard = () => {
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
               },
+              '& .MuiDataGrid-scrollbar': {
+                '&[aria-hidden="true"]': {
+                  visibility: 'visible',
+                  pointerEvents: 'auto',
+                },
+              },
             }}
           />
         )}

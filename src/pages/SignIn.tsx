@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
-import { Box, Card, CardContent, Typography, Button, CircularProgress } from '@mui/material';
-import { ResponsiveContainer } from './ResponsiveContainer';
+import { Box, Card, CardContent, Typography, Button, CircularProgress, Alert } from '@mui/material';
+import { ResponsiveContainer } from '../components/ResponsiveContainer';
 import { useErrorToast } from '../hooks/useErrorToast';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { showError } = useErrorToast();
-  const { login } = useAuth();
+  const { loginWithOAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleSignIn = async (provider: 'github' | 'discord') => {
     setIsLoading(true);
+    setError(null);
     try {
-      // Simulate sign-in process
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      // Replace with actual sign-in logic
-      const userData = {
-        id: '123',
-        name: 'John Doe',
-        email: 'john.doe@example.com',
-      };
-      login(userData);
-      navigate('/dashboard');
+      console.log(`Starting ${provider} OAuth flow...`);
+      await loginWithOAuth(provider);
+      // Don't navigate here - the OAuth flow will redirect to provider
     } catch (error) {
+      console.error('Sign in error:', error);
+      setError(`Failed to sign in with ${provider}. Please try again.`);
       showError(`Failed to sign in with ${provider}`);
     } finally {
       setIsLoading(false);
@@ -42,20 +39,29 @@ const SignIn = () => {
           background: 'linear-gradient(45deg, #1976D2 30%, #DC004E 90%)',
         }}
       >
-        <Card sx={{ minWidth: 300 }}>
+        <Card sx={{ minWidth: 300, p: 2 }}>
           <CardContent>
             <Typography variant="h5" component="div" gutterBottom>
               Sign In
             </Typography>
+            
+            {error && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {error}
+              </Alert>
+            )}
+
             {isLoading ? (
-              <CircularProgress />
+              <Box display="flex" justifyContent="center" p={2}>
+                <CircularProgress />
+              </Box>
             ) : (
               <>
                 <Button
                   variant="contained"
                   color="primary"
                   fullWidth
-                  sx={{ mb: 1 }}
+                  sx={{ mb: 2 }}
                   onClick={() => handleSignIn('github')}
                 >
                   Sign in with GitHub

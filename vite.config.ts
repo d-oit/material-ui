@@ -1,6 +1,7 @@
 import { defineConfig, type UserConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
+import path from 'path';
 
 export default defineConfig(({ command }): UserConfig => {
   const config: UserConfig = {
@@ -9,7 +10,7 @@ export default defineConfig(({ command }): UserConfig => {
       VitePWA({
         srcDir: 'src',
         filename: 'service-worker.ts',
-        strategies: 'generateSW',  // Changed from injectManifest to generateSW
+        strategies: 'generateSW',
         registerType: 'prompt',
         devOptions: {
           enabled: true,
@@ -31,7 +32,7 @@ export default defineConfig(({ command }): UserConfig => {
                 cacheName: 'api-cache',
                 expiration: {
                   maxEntries: 50,
-                  maxAgeSeconds: 30 * 24 * 60 * 60 // 30 days
+                  maxAgeSeconds: 30 * 24 * 60 * 60
                 },
                 cacheableResponse: {
                   statuses: [0, 200]
@@ -45,7 +46,7 @@ export default defineConfig(({ command }): UserConfig => {
                 cacheName: 'assets-cache',
                 expiration: {
                   maxEntries: 100,
-                  maxAgeSeconds: 7 * 24 * 60 * 60 // 7 days
+                  maxAgeSeconds: 7 * 24 * 60 * 60
                 },
                 cacheableResponse: {
                   statuses: [0, 200]
@@ -129,6 +130,11 @@ export default defineConfig(({ command }): UserConfig => {
         }
       })
     ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
+    },
     build: {
       rollupOptions: {
         output: {
